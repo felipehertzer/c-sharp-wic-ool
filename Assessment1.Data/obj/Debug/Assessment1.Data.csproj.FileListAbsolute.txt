@@ -1,0 +1,6 @@
+C:\Users\felip\source\repos\Assessment1\Assessment1.Data\bin\Debug\Assessment1.Data.dll
+C:\Users\felip\source\repos\Assessment1\Assessment1.Data\bin\Debug\Assessment1.Data.pdb
+C:\Users\felip\source\repos\Assessment1\Assessment1.Data\obj\Debug\Assessment1.Data.csprojAssemblyReference.cache
+C:\Users\felip\source\repos\Assessment1\Assessment1.Data\obj\Debug\Assessment1.Data.csproj.CoreCompileInputs.cache
+C:\Users\felip\source\repos\Assessment1\Assessment1.Data\obj\Debug\Assessment1.Data.dll
+C:\Users\felip\source\repos\Assessment1\Assessment1.Data\obj\Debug\Assessment1.Data.pdb
