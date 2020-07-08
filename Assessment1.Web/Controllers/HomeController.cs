@@ -24,33 +24,38 @@ namespace Assessment1.Web.Controllers
         {
             ViewBag.Accountant = dbAccountant.GetAll();
             ViewBag.Technician = dbTechnician.GetAll();
-            ViewBag.TaxValue = 0;
+            ViewBag.TaxValue = String.Format("{0:C}", 0);
+            ViewBag.Value = String.Format("{0:C}", 0);
 
             return View();
         }
 
         [HttpPost]
-        public ActionResult OnPostIndex(int employeeId, double hours)
+        public ActionResult Index(int employeeId, double hours)
         {
             var accountants = dbAccountant.GetAll();
             var technicians = dbTechnician.GetAll();
             double taxValue = 0;
-            Accountant selectedAccountants = accountants.First(item => item.EmployeeId == employeeId);
-            Technician selectedTechnician = technicians.First(item => item.EmployeeId == employeeId);
-            if (selectedAccountants.EmployeeName != "")
+            double value = 0;
+            Accountant selectedAccountants = accountants.Where(i => i.EmployeeId == employeeId).FirstOrDefault();
+            Technician selectedTechnician = technicians.Where(i => i.EmployeeId == employeeId).FirstOrDefault();
+            if (selectedAccountants != null)
             {
-                taxValue = selectedAccountants.CalculateWage(hours);
+                value = selectedAccountants.CalculateWage(hours);
+                taxValue = selectedAccountants.CalculateTax(hours);
             } 
-            else if (selectedTechnician.EmployeeName != "")
+            else if (selectedTechnician != null)
             {
-                taxValue = selectedTechnician.CalculateWage(hours);
+                value = selectedTechnician.CalculateWage(hours);
+                taxValue = selectedTechnician.CalculateTax(hours);
             }
-
-            Console.WriteLine(taxValue);
 
             ViewBag.Technician = dbTechnician.GetAll();
             ViewBag.Accountant = accountants;
-            ViewBag.TaxValue = taxValue;
+            ViewBag.EmployeeId = employeeId;
+            ViewBag.Hours = hours;
+            ViewBag.TaxValue = String.Format("{0:C}", taxValue);
+            ViewBag.Value = String.Format("{0:C}", value);
             return View();
         }
 
