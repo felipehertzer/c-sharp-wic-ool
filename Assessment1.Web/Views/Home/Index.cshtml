@@ -2,64 +2,78 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h2>Calculate Wage</h2>
-    <div class="row">
-        <div class="col-md-6">
-            <form method="post">
-                <div class="form-group">
-                    <label>EmployeeId</label>
-                    <input class="form-control" name="employeeId" type="number" value="@ViewBag.EmployeeId" />
-                </div>
-
-                <div class="form-group">
-                    <label>Hours</label>
-                    <input class="form-control" name="hours" type="tel" value="@ViewBag.Hours" />
-                </div>
-
-                <button class="btn btn-primary" type="submit">Calculate</button>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <h3>Value: @ViewBag.Value</h3>
-            <h3>Tax: @ViewBag.TaxValue</h3>
-        </div>
-    </div>
-</div>
-
-
 <div class="row">
     <div class="col-md-12">
         <h2>Employee</h2>
+        <form method="get">
+            <div class="row" style="margin-bottom: 1rem;">
+                <div class="col-sm-6">
+                    <div class="input-group mb-3" style="display: block;">
+                        <input type="text" class="form-control" name="search" style="width:250px" value="@ViewBag.Search" placeholder="Search..." aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <a href="/Home/Create" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i></a>
+                </div>
+            </div>
+        </form>
+
         <table class="table table-bordered table-hover table-striped">
             <thead>
                 <tr>
                     <th>Id</th>
                     <th>Name</th>
+                    <th>Type</th>
                     <th>Rate Per Hour</th>
                     <th>CPA/ACS Number</th>
                     <th>Expire</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var technician in ViewBag.Technician)
+                @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@technician.EmployeeId</td>
-                        <td>@technician.EmployeeName</td>
-                        <td>@technician.RatePerHour</td>
-                        <td>@technician.AcsNumber</td>
-                        <td>@technician.ExpireDate</td>
-                    </tr>
-                }
-                @foreach (var accountant in ViewBag.Accountant)
-                {
-                    <tr>
-                        <td>@accountant.EmployeeId</td>
-                        <td>@accountant.EmployeeName</td>
-                        <td>@accountant.RatePerHour</td>
-                        <td>@accountant.CpaNumber</td>
-                        <td>None</td>
+                        <td>@item.EmployeeID</td>
+                        <td>@item.EmployeeName</td>
+                        <td>
+                            @if (@item.Accountant != null)
+                            {
+                                <p>Accountant</p>
+                            }
+                            else if (@item.Technician != null)
+                            {
+                                <p>Technician</p>
+                            }
+                        </td>
+                        <td>R$ @item.RatePerHour</td>
+                        <td>
+                            @if (@item.Accountant != null)
+                            {
+                                @item.Accountant.CPAnumber
+                            }
+                            else if (@item.Technician != null)
+                            {
+                                @item.Technician.ACSnumber
+                            }
+                        </td>
+                        <td>
+                            @if (@item.Accountant != null)
+                            {
+                                <p>None</p>
+                            }
+                            else if (@item.Technician != null)
+                            {
+                                @item.Technician.Expire.ToString("dd/MM/yyyy")
+                            }
+                        </td>
+                        <td>
+                            <a href="/Home/Edit/@item.EmployeeID" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a href="/Home/Delete/@item.EmployeeID" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></a>
+                        </td>
                     </tr>
                 }
             </tbody>

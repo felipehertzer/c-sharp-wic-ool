@@ -79,3 +79,8 @@ C:\Users\felip\source\repos\Assessment1\Assessment1.Web\obj\Debug\Assessment1.We
 C:\Users\felip\source\repos\Assessment1\Assessment1.Web\obj\Debug\Assessment1.Web.pdb
 C:\Users\felip\source\repos\Assessment1\Assessment1.Web\bin\Assessment1.Data.dll
 C:\Users\felip\source\repos\Assessment1\Assessment1.Web\bin\Assessment1.Data.pdb
+C:\Users\felip\source\repos\Assessment1\Assessment1.Web\bin\Assessment1.Data.dll.config
+C:\Users\felip\source\repos\Assessment1\Assessment1.Web\bin\EntityFramework.dll
+C:\Users\felip\source\repos\Assessment1\Assessment1.Web\bin\EntityFramework.SqlServer.dll
+C:\Users\felip\source\repos\Assessment1\Assessment1.Web\bin\EntityFramework.xml
+C:\Users\felip\source\repos\Assessment1\Assessment1.Web\bin\EntityFramework.SqlServer.xml
