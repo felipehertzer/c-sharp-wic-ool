@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WicCompanyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Accountant">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+    <Property Name="CPAnumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Accountants_Employee" FromRole="Accountants" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="RatePerHour" Type="Decimal" Precision="18" Scale="0" />
+    <NavigationProperty Name="Accountant" Relationship="Self.FK_Accountants_Employee" FromRole="Employee" ToRole="Accountants" />
+    <NavigationProperty Name="Technician" Relationship="Self.FK_Technicians_Employee" FromRole="Employee" ToRole="Technicians" />
+  </EntityType>
+  <EntityType Name="Technician">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+    <Property Name="ACSnumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Expire" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Technicians_Employee" FromRole="Technicians" ToRole="Employee" />
+  </EntityType>
+  <Association Name="FK_Accountants_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Accountants" Type="Self.Accountant" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="Accountants">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Technicians_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Technicians" Type="Self.Technician" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="Technicians">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="WicCompanyEntitiesDb" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accountants" EntityType="Self.Accountant" />
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="Technicians" EntityType="Self.Technician" />
+    <AssociationSet Name="FK_Accountants_Employee" Association="Self.FK_Accountants_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Accountants" EntitySet="Accountants" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Technicians_Employee" Association="Self.FK_Technicians_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Technicians" EntitySet="Technicians" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

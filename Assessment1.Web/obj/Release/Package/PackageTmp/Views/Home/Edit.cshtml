@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+<div class="row">
+    <div class="col-sm-12">
+        <form method="post">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Name" value="@ViewBag.Employee.EmployeeName" required>
+            </div>
+            <div class="form-group">
+                <label for="ratePerHour">Rate Per Hour</label>
+                <div class="input-group">
+                    <span class="input-group-addon">$</span>
+                    <input type="tel" class="form-control" name="ratePerHour" id="ratePerHour" placeholder="Rate Per Hour" value="@ViewBag.Employee.RatePerHour" required>
+                </div>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="a" @(ViewBag.Employee.Accountant != null ? "checked='checked'" : "")>
+                <label class="form-check-label" for="exampleRadios1">
+                    Accountant
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="type" id="exampleRadios2" value="t" @(ViewBag.Employee.Technician != null ? "checked='checked'" : "")>
+                <label class="form-check-label" for="exampleRadios2">
+                    Technician
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="memberNumber">Member Number</label>
+                <input type="text" class="form-control" name="memberNumber" id="memberNumber" value="@(ViewBag.Employee.Technician != null ? ViewBag.Employee.Technician.ACSnumber : ViewBag.Employee.Accountant.CPAnumber)" placeholder="Member Number" required>
+            </div>
+            <div class="form-group" id="expiry">
+                <label for="expiryDate">Expire Date</label>
+                <input type="date" class="form-control" name="expiryDate" id="expiryDate" value="@(ViewBag.Employee.Technician != null ? ViewBag.Employee.Technician.Expire.ToString("yyyy-MM-dd") : "")" placeholder="Expiry">
+            </div>
+            <a href="javascript:window.history.back()" class="btn btn-default">Cancel</a>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var hidden = @(@ViewBag.Employee.Accountant != null ? "true" : "false");
+        if (hidden) {
+            $('#expiry').hide();
+        }
+
+        $("input[name='type']").on('change', function () {
+           if ($(this).val() === 'a') {
+                $('#expiry').hide();
+           } else {
+                $('#expiry').show();
+           }
+       });
+    });
+</script>
